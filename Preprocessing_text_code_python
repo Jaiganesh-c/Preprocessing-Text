@@ -1,0 +1,157 @@
+# CREATE BAG OF WORDS
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
+import pandas as pd
+#Create text data
+text_data=np.array(['Time is Gold','Time and Tide waits for none','Smile it cost nothing'])
+# Create a bag of words
+# Create bag of word feature matrix
+count= CountVectorizer()
+bag_of_words=count.fit_transform(text_data)
+#show feature matrix
+bag_of_words.toarray()
+# View bag of words matrix column headers
+# Get feature names
+feature_names=count.get_feature_names()
+#view feature names
+feature_names
+#View as a Dataframe
+#create a dataframe
+pd.DataFrame(bag_of_words.toarray(),columns=feature_names)
+
+
+# PARSE HTML
+#Preliminaries
+#Load library
+from bs4 import BeautifulSoup
+#Create HTML
+html="<div class='full_name'><span style='font-weight:bold'>Andy</span> Flower</div>"
+#Parse Html
+soup=BeautifulSoup(html,"lxml")
+#find div with the class "full_name",show text
+soup.find("div",{"class":"full_name"}).text
+
+
+# REMOVE PUNCTUATION
+#Preliminaries
+# Load library
+import string
+import numpy as np
+# CREATE TEXT DATA
+# create text
+text_data=['Hi!!!! I. Love. This. Song....','10000% Agree!!! #LoveIT','Right?!?!']
+# Remove Puntuation
+# Create funtion using string.puntuation to remove all puntuation
+def remove_punctuation(sentence:str ) -> str:
+ return sentence.translate(str.maketrans('','',string.punctuation))
+# Apply function
+[remove_punctuation(sentence) for sentence in text_data]
+
+
+# REMOVE STOP WORDS
+# Preliminaries
+# Load library
+from nltk.corpus import stopwords
+# you will have to download the set of words the first time
+import nltk
+nltk.download('stopwords')
+#Create token words
+tokenized_words=['i','am','going','to','go','to','the','store','and','park']
+#Load Stop words
+stop_words=stopwords.words('english')
+#show stop words
+stop_words[:5]
+#Remove stop words.
+[word for word in tokenized_words if word not in stop_words]
+
+
+# REPLACE CHARACTERS
+# Preliminaries
+# import library
+import re
+#Create Text
+text_data=['Interrobang. By Aishwarya Henritte','Parking and going. By Karl Gautier','Today is the Night.By Jaret Prakash']
+#Replace character (Method 1)
+#Remove periods
+remove_periods=[string.replace('.','')for  string in text_data]
+#show text
+remove_periods
+#Replace character (Method 2)
+def replace_letters_with_x(string:str) ->str:
+ return re.sub(r'[a-zA-Z]','X',string)
+#Apply function
+[replace_letters_with_x(string) for string in remove_periods]  
+
+
+# STEMMIMG WORDS
+# Preliminaries
+#Load library
+from nltk.stem.porter import PorterStemmer
+#Create Text Data
+tokenized_words=['i','am','humbled','by','this','traditional','meeting']
+#Stem words
+# Stemming reduces a word to its stem by identifying and removing affixes (e.g. gerunds) while keeping the root meaning of the word. NLTK's PorterStemmer implements the widely used Porter Stemming Algorithm.
+#Create stem
+porter=PorterStemmer()
+#Apply stemmer
+[porter.stem(word) for word in tokenized_words] 
+
+
+# STRIP WHITESPACE
+import string
+#Create text
+text_data=['    Interrobang. By Aishwarya Hendritee   ','    Parking and going. By karl Gautier', '      Today is the night. By Jarek Prakash     ' ]
+#Remove Whitespace
+Strip_whitespace=[string.strip() for string in text_data]
+#show texxt
+Strip_whitespace
+     
+
+# TAG PARTS OF SPEECH
+
+from nltk import pos_tag
+from nltk import word_tokenize
+#create text
+text_data="Chris loved outdoor running"
+#Tag part of speech
+#use pretrained part of speech tagger
+
+#import nltk
+#nltk.download('punkt')
+text_tagged=pos_tag(word_tokenize(text_data))
+#show parts of speech
+text_tagged
+
+
+# TERM FREQUENCY INVERSE DOCUMENT FREQUENCY
+#Preliminaries
+#Load library
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+import pandas as pd
+#Create text data
+text_data=np.array(['I love Brazil. Brazil',' Sweden is the best','Germany beats both'])
+# Create feature matrix
+# Create the tf-idf feature matrix
+tfidf=TfidfVectorizer()
+feature_matrix=tfidf.fit_transform(text_data)
+#show tf-idf feature matrix
+feature_matrix.toarray()
+#show tf-idf feature names
+tfidf.get_feature_names()
+# View feature matrix as Data Frame
+#create data frame
+pd.DataFrame(feature_matrix.toarray(),columns=tfidf.get_feature_names())
+
+
+# Tokenize Text
+#Preliminaries
+#Load Library
+from nltk.tokenize import word_tokenize,sent_tokenize
+#Create Text data
+string="The Science of today technology is tomorrow. Tomorrow is today."
+#Tokenize words
+#nltk.download('punkt')
+word_tokenize(string)
+# Tokenize Sentences
+sent_tokenize(string)
